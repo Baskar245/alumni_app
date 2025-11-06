@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Opportunities{% endblock %}
+{% block content %}
+<h2 class="mb-3">All Opportunities</h2>
+{% if jobs %}
+  <div class="row">
+    {% for j in jobs %}
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ j["title"] }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ j["company"] }}</h6>
+            <p class="card-text">{{ j["description"] }}</p>
+            {% if j["link"] %}
+              <a href="{{ j["link"] }}" target="_blank" class="card-link">More info</a>
+            {% endif %}
+            <p class="mt-2"><small class="text-muted">Posted by: {{ j["posted_by"] }}</small></p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No opportunities posted yet.</p>
+{% endif %}
+{% endblock %}

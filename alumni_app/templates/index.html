@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Home - Alumni App{% endblock %}
+{% block content %}
+<div class="text-center">
+  <h1 class="mb-3">Welcome to the College Opportunities Board</h1>
+  <p class="lead">Pass-out students (alumni) can login to post opportunities. Present students can view all opportunities without login.</p>
+  <div class="d-flex justify-content-center gap-2">
+    <a class="btn btn-primary" href="{{ url_for('view_jobs') }}">View Opportunities</a>
+    <a class="btn btn-outline-primary" href="{{ url_for('user_login') }}">Alumni Login</a>
+    <a class="btn btn-outline-secondary" href="{{ url_for('admin_login') }}">Admin Login</a>
+  </div>
+</div>
+{% endblock %}

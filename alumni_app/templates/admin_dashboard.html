@@ -1,0 +1,48 @@
+﻿{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Admin Dashboard</h3>
+  <div>
+    <a class="btn btn-secondary" href="{{ url_for('add_alumni') }}">Add Alumni / Student</a>
+    <a class="btn btn-outline-danger" href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</div>
+
+<h5>Alumni / Students</h5>
+<table class="table table-sm">
+  <thead><tr><th>Name</th><th>Reg No</th><th>DOB</th><th>Batch</th><th>Dept</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for a in alumni %}
+    <tr>
+      <td>{{ a["name"] }}</td>
+      <td>{{ a["reg_no"] }}</td>
+      <td>{{ a["dob"] }}</td>
+      <td>{{ a["batch_year"] }}</td>
+      <td>{{ a["department"] }}</td>
+      <td>
+        <a class="btn btn-sm btn-primary" href="{{ url_for('edit_alumni', al_id=a['id']) }}">Edit</a>
+        <form style="display:inline" method="post" action="{{ url_for('delete_alumni', al_id=a['id']) }}">
+          <button class="btn btn-sm btn-danger" onclick="return confirm('Delete record?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h5 class="mt-4">Posted Opportunities</h5>
+{% if jobs %}
+  <ul class="list-group">
+    {% for j in jobs %}
+      <li class="list-group-item">
+        <strong>{{ j['title'] }}</strong> — <small>{{ j['company'] }}</small>
+        <p class="mb-0">{{ j['description']|truncate(120) }}</p>
+        <small class="text-muted">Posted by {{ j['posted_by'] }}</small>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No posts yet.</p>
+{% endif %}
+{% endblock %}
