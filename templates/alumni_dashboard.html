@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Alumni Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Welcome, {{ session.get('user_name') }}</h3>
+  <div>
+    <a class="btn btn-outline-danger" href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</div>
+
+<h5>Post an Opportunity</h5>
+<form method="post" class="mb-4">
+  <div class="mb-3">
+    <label class="form-label">Title</label>
+    <input name="title" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Company</label>
+    <input name="company" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea name="description" class="form-control" rows="4"></textarea>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Link (optional)</label>
+    <input name="link" class="form-control">
+  </div>
+  <button class="btn btn-success">Post</button>
+</form>
+
+<h5>All Opportunities</h5>
+{% if jobs %}
+  <div class="row">
+    {% for j in jobs %}
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5>{{ j['title'] }}</h5>
+            <h6 class="text-muted">{{ j['company'] }}</h6>
+            <p>{{ j['description'] }}</p>
+            {% if j['link'] %}
+              <a href="{{ j['link'] }}" target="_blank">More</a>
+            {% endif %}
+            <p class="mt-2"><small class="text-muted">Posted by: {{ j['posted_by'] }}</small></p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No opportunities posted yet.</p>
+{% endif %}
+{% endblock %}
